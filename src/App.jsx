@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import "./App.css";
-
 // Component imports
 import Header from "./components/Header";
 import ModeToggle from "./components/ModeToggle";
@@ -13,6 +12,7 @@ import BattleResult from "./components/BattleResult";
 import LeaderBoard from "./components/leader-board";
 import NotificationBanner from "./components/NotificationBanner";
 import Modal from "./components/Modal";
+import { WalletConnectButton } from "./components/WalletConnect";
 
 // Services
 // NOTE: On-page blockchain integration removed. Re-enable and implement
@@ -475,9 +475,9 @@ const CryptoPongBattle = () => {
           isRunning={isRunning}
           onToggle={handleModeToggle}
         />
-
+        {gameMode === "prediction" && <WalletConnectButton />}
         {/* Error Notification */}
-        {apiError && <NotificationBanner message={apiError} type="error" />}
+        {/*apiError && <NotificationBanner message={apiError} type="error" />*/}
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
           {/* Left Panel - Controls */}
