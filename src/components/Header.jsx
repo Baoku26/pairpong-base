@@ -8,6 +8,7 @@ const Header = () => {
         <h1 className="game-title text-3xl sm:text-4xl lg:text-5xl">
           PAIRPONG
         </h1>
+
         <Gamepad2 className="w-8 h-8 lg:w-10 lg:h-10 text-accent animate-pulse" />
       </div>
       <p className="text-textMuted text-xs sm:text-sm text-center">

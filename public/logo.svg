@@ -1,0 +1,81 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00cc6f;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="secondaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffaa00;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b9d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff4757;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Glow filters -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="strongGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background circle with gradient -->
+  <circle cx="100" cy="100" r="95" fill="url(#primaryGradient)" opacity="0.1"/>
+
+  <!-- Main Pong paddles -->
+  <!-- Left paddle (Bitcoin style) -->
+  <rect x="25" y="60" width="8" height="80" rx="4" fill="url(#primaryGradient)" filter="url(#glow)"/>
+
+  <!-- Right paddle (Ethereum style) -->
+  <rect x="167" y="60" width="8" height="80" rx="4" fill="url(#secondaryGradient)" filter="url(#glow)"/>
+
+  <!-- Ball with trail effect -->
+  <circle cx="100" cy="100" r="8" fill="url(#secondaryGradient)" filter="url(#strongGlow)"/>
+
+  <!-- Ball trail -->
+  <circle cx="95" cy="95" r="4" fill="url(#secondaryGradient)" opacity="0.6"/>
+  <circle cx="90" cy="90" r="3" fill="url(#secondaryGradient)" opacity="0.4"/>
+  <circle cx="85" cy="85" r="2" fill="url(#secondaryGradient)" opacity="0.2"/>
+
+  <!-- Crypto symbols -->
+  <!-- Bitcoin symbol on left paddle -->
+  <text x="29" y="105" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="url(#primaryGradient)" filter="url(#glow)">₿</text>
+
+  <!-- Ethereum symbol on right paddle -->
+  <text x="170" y="105" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="url(#secondaryGradient)" filter="url(#glow)">Ξ</text>
+
+  <!-- Center line with glow -->
+  <line x1="100" y1="20" x2="100" y2="180" stroke="url(#primaryGradient)" stroke-width="2" opacity="0.3" stroke-dasharray="5,5" filter="url(#glow)"/>
+
+  <!-- App title -->
+  <text x="100" y="30" font-family="Orbitron, Arial, sans-serif" font-size="16" font-weight="900" text-anchor="middle" fill="url(#primaryGradient)" filter="url(#glow)">PAIR</text>
+  <text x="100" y="50" font-family="Orbitron, Arial, sans-serif" font-size="16" font-weight="900" text-anchor="middle" fill="url(#secondaryGradient)" filter="url(#glow)">PONG</text>
+
+  <!-- Decorative elements -->
+  <!-- Corner accents -->
+  <circle cx="30" cy="30" r="3" fill="url(#accentGradient)" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="170" cy="30" r="3" fill="url(#accentGradient)" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="30" cy="170" r="3" fill="url(#accentGradient)" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="170" cy="170" r="3" fill="url(#accentGradient)" opacity="0.6" filter="url(#glow)"/>
+
+  <!-- Animated pulse effect (CSS animation will be added) -->
+  <circle cx="100" cy="100" r="15" fill="none" stroke="url(#primaryGradient)" stroke-width="1" opacity="0.3">
+    <animate attributeName="r" values="15;25;15" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.3;0.1;0.3" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>

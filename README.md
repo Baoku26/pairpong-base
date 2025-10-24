@@ -1,6 +1,12 @@
 # 🎮 PairPong - Crypto Battle Arena
 
-A futuristic cryptocurrency battle game where digital assets fight in real-time Pong-style battles based on their market performance. Watch as Bitcoin, Ethereum, and other cryptocurrencies battle it out in an epic gaming arena!
+<div align="center">
+  <img src="public/logo-large.svg" alt="PairPong Logo" width="400" height="200"/>
+
+  <p><em>A futuristic cryptocurrency battle game where digital assets fight in real-time Pong-style battles based on their market performance.</em></p>
+
+  <p>Watch as Bitcoin, Ethereum, and other cryptocurrencies battle it out in an epic gaming arena!</p>
+</div>
 
 
 ![React](https://img.shields.io/badge/React-19.1.1-blue)
