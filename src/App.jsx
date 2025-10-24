@@ -12,6 +12,7 @@ import BattleStats from "./components/BattleStats";
 import BattleResult from "./components/BattleResult";
 import LeaderBoard from "./components/leader-board";
 import NotificationBanner from "./components/NotificationBanner";
+import Modal from "./components/Modal";
 
 // Services
 // NOTE: On-page blockchain integration removed. Re-enable and implement
@@ -40,6 +41,14 @@ const CryptoPongBattle = () => {
   // Mode state
   const [gameMode, setGameMode] = useState("normal");
   const [userPrediction, setUserPrediction] = useState(null);
+
+  // Modal state
+  const [modal, setModal] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    type: "info"
+  });
 
   // Wallet state
   // Wallet/on-chain submission removed from this page. Keep UI (WalletConnect)
@@ -110,6 +119,20 @@ const CryptoPongBattle = () => {
   });
 
   const apiError = coinsError || pricesError;
+
+  // Modal helper function
+  const showModal = (title, message, type = "info") => {
+    setModal({
+      isOpen: true,
+      title,
+      message,
+      type
+    });
+  };
+
+  const closeModal = () => {
+    setModal(prev => ({ ...prev, isOpen: false }));
+  };
 
   // Wallet connection check removed. This page no longer attempts on-chain
   // interactions. Reconnect logic should be reintroduced alongside the
@@ -224,7 +247,7 @@ const CryptoPongBattle = () => {
 
   const handleModeToggle = () => {
     if (isRunning) {
-      alert("Cannot change mode during an active battle");
+      showModal("Battle in Progress", "Cannot change mode during an active battle. Please wait for the current battle to finish.", "warning");
       return;
     }
     setGameMode(gameMode === "normal" ? "prediction" : "normal");
@@ -268,12 +291,12 @@ const CryptoPongBattle = () => {
 
   const startGame = async () => {
     if (!coinA || !coinB) {
-      alert("Please select both coins");
+      showModal("Select Fighters", "Please select both cryptocurrencies to start the battle.", "info");
       return;
     }
 
     if (gameMode === "prediction" && !userPrediction) {
-      alert("Please make a prediction before starting the battle");
+      showModal("Make Your Prediction", "Please select which cryptocurrency you think will win before starting the battle.", "info");
       return;
     }
 
@@ -321,7 +344,7 @@ const CryptoPongBattle = () => {
       ballTrailRef.current = [];
     } catch (error) {
       console.error(error);
-      alert("Failed to start battle. Please try again.");
+      showModal("Battle Failed", "Failed to start battle. Please check your connection and try again.", "error");
     } finally {
       setLoadingHistorical(false);
     }
@@ -554,6 +577,15 @@ const CryptoPongBattle = () => {
           </div>
         )}
       </div>
+
+      {/* Modal */}
+      <Modal
+        isOpen={modal.isOpen}
+        onClose={closeModal}
+        title={modal.title}
+        message={modal.message}
+        type={modal.type}
+      />
     </div>
   );
 };
