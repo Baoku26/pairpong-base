@@ -171,7 +171,7 @@ const LeaderBoard = () => {
         {label}
       </div>
       <div
-        className={`absolute inset-0 bg-gradient-to-br from-transparent to-${color}/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+        className={`absolute inset-0 bg-linear-to-br from-transparent to-${color}/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
       />
     </div>
   );
@@ -306,7 +306,7 @@ const LeaderBoard = () => {
       {/* Header Section */}
       <header className="text-center space-y-4">
         <div className="flex items-center justify-center gap-4">
-          <div className="p-3 bg-gradient-to-br from-[#00ff88] to-[#00cc6a] rounded-xl shadow-lg">
+          <div className="p-3 bg-linear-to-br from-[#00ff88] to-[#00cc6a] rounded-xl shadow-lg">
             <ChartBarIncreasingIcon className="h-8 w-8 text-white" />
           </div>
           <h1 className="heading-font text-3xl lg:text-4xl font-black text-[#F5C542] tracking-tight">
@@ -365,7 +365,7 @@ const LeaderBoard = () => {
           </div>
 
           {/* Best Performance Highlight */}
-          <div className="bg-gradient-to-r from-[#1a1f2e] to-[#26462F] border border-[#F5C542]/50 rounded-xl p-6 relative overflow-hidden">
+          <div className="bg-linear-to-r from-[#1a1f2e] to-[#26462F] border border-[#F5C542]/50 rounded-xl p-6 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#F5C542]/5 rounded-full blur-3xl p-5" />
             <div className="relative flex items-center gap-4 mb-4">
               <Zap className="w-6 h-6 text-[#F5C542]" />
