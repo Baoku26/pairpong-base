@@ -1,0 +1,550 @@
+{
+    "abi": [
+		{
+			"inputs": [],
+			"stateMutability": "nonpayable",
+			"type": "constructor"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "uint256",
+					"name": "battleId",
+					"type": "uint256"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "player",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "bool",
+					"name": "wasCorrect",
+					"type": "bool"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "pointsEarned",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "timestamp",
+					"type": "uint256"
+				}
+			],
+			"name": "BattleSubmitted",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "player",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "totalPoints",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "accuracy",
+					"type": "uint256"
+				}
+			],
+			"name": "LeaderboardUpdated",
+			"type": "event"
+		},
+		{
+			"inputs": [],
+			"name": "BONUS_POINTS_HIGH_DELTA",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "DELTA_THRESHOLD",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "POINTS_PER_CORRECT_PREDICTION",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "battleCount",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "battleHistory",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "player",
+					"type": "address"
+				},
+				{
+					"internalType": "string",
+					"name": "coinA",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "coinB",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "predictedWinner",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "actualWinner",
+					"type": "string"
+				},
+				{
+					"internalType": "bool",
+					"name": "wasCorrect",
+					"type": "bool"
+				},
+				{
+					"internalType": "uint256",
+					"name": "delta",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "scoreA",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "scoreB",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "timestamp",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "emergencyWithdraw",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "player",
+					"type": "address"
+				}
+			],
+			"name": "getAccuracy",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "battleId",
+					"type": "uint256"
+				}
+			],
+			"name": "getBattleById",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "address",
+							"name": "player",
+							"type": "address"
+						},
+						{
+							"internalType": "string",
+							"name": "coinA",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "coinB",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "predictedWinner",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "actualWinner",
+							"type": "string"
+						},
+						{
+							"internalType": "bool",
+							"name": "wasCorrect",
+							"type": "bool"
+						},
+						{
+							"internalType": "uint256",
+							"name": "delta",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "scoreA",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "scoreB",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "timestamp",
+							"type": "uint256"
+						}
+					],
+					"internalType": "struct BattleLeaderboard.BattleRecord",
+					"name": "",
+					"type": "tuple"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "getBattleCount",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "player",
+					"type": "address"
+				}
+			],
+			"name": "getPlayerBattleCount",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "player",
+					"type": "address"
+				}
+			],
+			"name": "getPlayerBattleIds",
+			"outputs": [
+				{
+					"internalType": "uint256[]",
+					"name": "",
+					"type": "uint256[]"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "user",
+					"type": "address"
+				}
+			],
+			"name": "getUserStats",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "uint256",
+							"name": "totalPredictions",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "correctPredictions",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "wrongPredictions",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "points",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "highestDelta",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "lastBattleTime",
+							"type": "uint256"
+						}
+					],
+					"internalType": "struct BattleLeaderboard.PlayerStats",
+					"name": "",
+					"type": "tuple"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "owner",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"name": "playerBattleIds",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"name": "playerStats",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "totalPredictions",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "correctPredictions",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "wrongPredictions",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "points",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "highestDelta",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "lastBattleTime",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "coinA",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "coinB",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "predictedWinner",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "actualWinner",
+					"type": "string"
+				},
+				{
+					"internalType": "uint256",
+					"name": "performanceDelta",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "scoreA",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "scoreB",
+					"type": "uint256"
+				}
+			],
+			"name": "submitBattle",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				},
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "battleId",
+					"type": "uint256"
+				},
+				{
+					"internalType": "address",
+					"name": "player",
+					"type": "address"
+				}
+			],
+			"name": "wasPredictionCorrect",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		}
+	]
+}
