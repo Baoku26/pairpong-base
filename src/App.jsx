@@ -13,6 +13,8 @@ import LeaderBoard from "./components/leader-board";
 import NotificationBanner from "./components/NotificationBanner";
 import Modal from "./components/Modal";
 import { WalletConnectButton } from "./components/WalletConnect";
+import { useSmartContracts } from './hooks/useSmartContracts';
+import { useWalletConnect } from './hooks/useWalletConnect';
 
 // Services
 // NOTE: On-page blockchain integration removed. Re-enable and implement
@@ -41,6 +43,20 @@ const CryptoPongBattle = () => {
   // Mode state
   const [gameMode, setGameMode] = useState("normal");
   const [userPrediction, setUserPrediction] = useState(null);
+  const { isConnected, address } = useWalletConnect();
+    const {
+    submitBattle,
+    getUserStats,
+    getAccuracy,
+    submitPrediction,
+    getPlayerPredictions,
+    mintBattleNFT,
+    getBalance,
+    loading: contractLoading,
+    error: contractError,
+  } = useSmartContracts(address, isConnected);
+  const [userStats, setUserStats] = useState(null);
+  const [nftBalance, setNftBalance] = useState(0);
 
   // Modal state
   const [modal, setModal] = useState({
@@ -169,6 +185,31 @@ const CryptoPongBattle = () => {
     setScoreA,
     setScoreB,
   });
+
+  useEffect(() => {
+    if (isConnected && address) {
+      fetchUserStats();
+      fetchNFTBalance();
+    }
+  }, [isConnected, address]);
+
+  const fetchUserStats = async () => {
+    try {
+      const stats = await getUserStats(address);
+      setUserStats(stats);
+    } catch (err) {
+      console.error('Failed to fetch user stats:', err);
+    }
+  };
+
+  const fetchNFTBalance = async () => {
+    try {
+      const balance = await getBalance(address);
+      setNftBalance(balance);
+    } catch (err) {
+      console.error('Failed to fetch NFT balance:', err);
+    }
+  };
 
   // Animation effect
   useEffect(() => {
@@ -393,27 +434,48 @@ const CryptoPongBattle = () => {
         paddleBHeight: state.paddleBHeight,
       });
 
-      if (gameMode === "prediction" && winnerSide !== "TIE") {
-        // On-chain submission removed. Record kept locally for now.
-        const localRecord = {
-          coinA: coinA?.symbol || "BTC",
-          coinB: coinB?.symbol || "ETH",
-          predictedWinner:
-            userPrediction === "A"
-              ? coinA?.symbol || "BTC"
-              : coinB?.symbol || "ETH",
-          actualWinner: winnerCoin,
-          performanceDelta: Math.abs(changeA - changeB),
-          scoreA: finalA,
-          scoreB: finalB,
-          timestamp: Date.now(),
-        };
-        console.log("Battle result (local only):", localRecord);
-        // TODO: When Solidity contracts are ready, replace this with on-chain
-        // submission logic that calls the deployed contract.
+      // Submit to smart contract if in prediction mode and wallet is connected
+      if (gameMode === "prediction" && winnerSide !== "TIE" && isConnected) {
+        try {
+          // First submit prediction settlement
+          const predictionTx = await submitPrediction(
+            coinA?.symbol || "BTC",
+            coinB?.symbol || "ETH",
+            userPrediction === "A" ? coinA?.symbol : coinB?.symbol
+          );
+          console.log('Prediction submitted:', predictionTx);
+
+          // Then submit battle to leaderboard
+          const battleTx = await submitBattle(
+            coinA?.symbol || "BTC",
+            coinB?.symbol || "ETH",
+            userPrediction === "A" ? coinA?.symbol : coinB?.symbol,
+            winnerCoin,
+            Math.abs(changeA - changeB),
+            finalA,
+            finalB
+          );
+          console.log('Battle submitted:', battleTx);
+
+          // Refresh user stats
+          await fetchUserStats();
+
+          showModal(
+            "Battle Recorded",
+            "Your battle has been recorded on-chain!",
+            "success"
+          );
+        } catch (err) {
+          console.error('Failed to submit battle to chain:', err);
+          showModal(
+            "Chain Submission Failed",
+            err.message || "Your battle was completed but couldn't be recorded on-chain. Please try again.",
+            "error"
+          );
+        }
       }
     }, 50);
-  }, [coinA, coinB, gameMode, userPrediction, scoreA, scoreB]);
+  }, [coinA, coinB, gameMode, userPrediction, scoreA, scoreB, isConnected, submitBattle, submitPrediction]);
 
   // Keep a stable ref to the latest endGame function so other effects can
   // call it without needing to include the function in their dependency
@@ -569,6 +631,26 @@ const CryptoPongBattle = () => {
             />
           </div>
         </div>
+
+        {gameMode === "prediction" && isConnected && userStats && (
+          <div className="game-card mt-4 p-3 bg-dark/50 border border-primary/30">
+            <h4 className="text-primary text-xs font-bold mb-2">YOUR STATS</h4>
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div>
+                <p className="text-lg font-bold text-primary">{userStats.points}</p>
+                <p className="text-xs text-textMuted">Points</p>
+              </div>
+              <div>
+                <p className="text-lg font-bold text-secondary">{userStats.correctPredictions}/{userStats.totalPredictions}</p>
+                <p className="text-xs text-textMuted">Accuracy</p>
+              </div>
+              <div>
+                <p className="text-lg font-bold text-accent">{nftBalance}</p>
+                <p className="text-xs text-textMuted">NFTs</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Leaderboard */}
         {gameMode === "prediction" && (

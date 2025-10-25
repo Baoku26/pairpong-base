@@ -19,6 +19,7 @@
     "@walletconnect/sign-client": "^2.22.4",
     "@walletconnect/utils": "^2.22.4",
     "@web3modal/ethers": "^5.1.11",
+    "ethers": "^6.15.0",
     "lucide-react": "^0.546.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
